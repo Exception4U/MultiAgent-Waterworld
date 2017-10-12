@@ -37,7 +37,10 @@
   <script src="external/jquery.flot.min.js"></script>
 
   <!-- environment dynamics -->
-  <script src="waterworld.js"></script>
+  <script src="waterworld.js"></script> 
+
+  <!-- nice interactive plotly JS library for plotting -->
+  <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.js"></script>
 
   <!-- GA -->
   <script>
@@ -65,7 +68,7 @@
         border: 1px solid black;
       }
     </style>
-    
+
     <script type="application/javascript">
       var canvas, ctx;
       var agentView = false;
@@ -219,6 +222,39 @@
           plot.draw();
         }, 100);
       }
+      
+      function plotly_plot1(){
+        Plotly.plot('tester1', [{
+          y: [0],
+          mode: 'lines',
+          line: {color: '#80CAF6'}
+        }, {
+          y: [0],
+          mode: 'lines',
+          line: {color: '#DF56F1'}
+        }]);
+        
+        var cnt = 0;
+        
+        var interval = setInterval(function() {
+          var res0 = getFlotRewards(0);
+          var res1 = getFlotRewards(1);
+          var x0=[],y0=[],x1=[],y1=[];
+          for(i=0;i<res0.length;i++){
+            x0.push(res0[i][0]);
+            y0.push(res0[i][1]);
+            x1.push(res1[i][0]);
+            y1.push(res1[i][1]);
+          }
+          //console.log(res0)
+          Plotly.extendTraces('tester1', {
+            y: [y0, y1]
+          }, [0, 1])
+        
+          if(cnt === 100) clearInterval(interval);
+        }, 100);
+      }
+
       function getFlotRewards(agentId) {
         // zip rewards into flot data
         var res = [];
@@ -263,6 +299,16 @@
         $("#mysterybox").val(JSON.stringify(brain.toJSON()));
       }
       
+      //function to download agent model in text file
+      //need to call menually from browser console
+      function download(text, name, type) {
+        var a = document.createElement("a");
+        var file = new Blob([text], {type: type});
+        a.href = URL.createObjectURL(file);
+        a.download = name;
+        a.click();
+    }
+
       function resetAgent() {
         eval($("#agentspec").val())
         var brain = new RL.DQNAgent(env, spec);
@@ -363,6 +409,8 @@
         $("#slider").slider('value', w.agents[0].brain.epsilon);
         
         initFlot();
+        //plotly_plot1()
+         
         gonormal();
 
         // render markdown
@@ -393,6 +441,9 @@
         $("#apples_and_poison").html(stats);
       }
     </script>
+    
+    
+    
   <style type="text/css">
       canvas { border: 1px solid white; }
   </style>
@@ -454,6 +505,7 @@
   <br>
     Exploration epsilon: <span id="eps">0.15</span> <div id="slider"></div>
   </br>
+  <div id="tester1" style="width:800px;height:400px;"></div>
 
   <div id="expi"></div>
   <div id="tde"></div>
@@ -463,8 +515,9 @@
   <textarea id="mysterybox" style="width:100%;display:none;">mystery text box</textarea>
 
 
-  <div id="exp" class="md">
 
+  <div id="exp" class="md">
+    
   ### Setup
 
   This is another Deep Q Learning demo with a more realistic and larger setup:
@@ -475,8 +528,8 @@
   - The **reward** awarded to the agent is +1 for making contact with any red target (these are apples) and -1 for making contact with any green target (this is poison).
 
   The optimal strategy of the agent is to cruise around, run away from green targets and eat red targets. What's interesting about this demo is that the state space is so high-dimensional, and also that the sensed variables are agent-relative. They're not just toy x,y coordinates of some fixed number of targets as in previous demo.
-
-    </div>
+  
+  </div>
 
       <br><br><br><br>
     </div>

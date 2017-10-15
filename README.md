@@ -1,4 +1,4 @@
-#MultiAgent WaterWorld Game
+# MultiAgent WaterWorld Game
 It is the extension to [Andrej Karpathy's fork](https://github.com/karpathy/recurrentjs) for single agent waterworld using DQN.
 
 Some key features:

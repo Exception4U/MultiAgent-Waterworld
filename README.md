@@ -1,3 +1,10 @@
+#MultiAgent WaterWorld Game
+It is the extension to [Andrej Karpathy's fork](https://github.com/karpathy/recurrentjs) for single agent waterworld using DQN.
+
+Some key features:
+- Negative reward for agents collision
+- Negative reward for agents workinf in overlapping sensor range
+
 # REINFORCEjs
 
 **REINFORCEjs** is a Reinforcement Learning library that implements several common RL algorithms, all with web demos. In particular, the library currently includes:

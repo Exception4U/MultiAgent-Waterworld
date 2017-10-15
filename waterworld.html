@@ -41,7 +41,7 @@
 
   <!-- nice interactive plotly JS library for plotting -->
   <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.js"></script>
-
+  
   <!-- GA -->
   <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -223,36 +223,26 @@
         }, 100);
       }
       
+      //code for plotly plot
+      var t = setInterval(plotly_plot1, 1000);
+      
       function plotly_plot1(){
-        Plotly.plot('tester1', [{
-          y: [0],
+        Plotly.newPlot('plotly', [{
+          y: smooth_reward_history[0],
           mode: 'lines',
-          line: {color: '#80CAF6'}
+          line: {color: '#80CAF6'},
+          name: 'Agent-1'
         }, {
-          y: [0],
+          y: smooth_reward_history[1],
           mode: 'lines',
-          line: {color: '#DF56F1'}
-        }]);
-        
-        var cnt = 0;
-        
-        var interval = setInterval(function() {
-          var res0 = getFlotRewards(0);
-          var res1 = getFlotRewards(1);
-          var x0=[],y0=[],x1=[],y1=[];
-          for(i=0;i<res0.length;i++){
-            x0.push(res0[i][0]);
-            y0.push(res0[i][1]);
-            x1.push(res1[i][0]);
-            y1.push(res1[i][1]);
-          }
-          //console.log(res0)
-          Plotly.extendTraces('tester1', {
-            y: [y0, y1]
-          }, [0, 1])
-        
-          if(cnt === 100) clearInterval(interval);
-        }, 100);
+          line: {color: '#DF56F1'},
+          name: 'Agent-2'
+        }], { 
+          xaxis:{ range:[0,1000] },
+          yaxis:{ range:[-0.05,0.05] },
+          title:'Rewards for agents'
+            }
+        );
       }
 
       function getFlotRewards(agentId) {
@@ -316,7 +306,7 @@
       }
 
       function loadAgent() {
-        $.getJSON( "agentzoo/wateragent.json", function( data ) {
+        $.getJSON( "agentzoo/server_good_model.json", function( data ) {
           for(i=0;i<2;i++){
             var agent = w.agents[i].brain;
             agent.fromJSON(data); // corss your fingers...
@@ -505,7 +495,7 @@
   <br>
     Exploration epsilon: <span id="eps">0.15</span> <div id="slider"></div>
   </br>
-  <div id="tester1" style="width:800px;height:400px;"></div>
+  <div id="plotly" style="width:800px;height:400px;"></div>
 
   <div id="expi"></div>
   <div id="tde"></div>

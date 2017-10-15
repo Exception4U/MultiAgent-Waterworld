@@ -6,7 +6,7 @@ Some key features:
 - Negative reward for agents workinf in overlapping sensor range
 
 ## results
-![best](https://media.giphy.com/media/3ohhwp1NZyDdqM8RRm/giphy.gif)
+![best1](https://media.giphy.com/media/3ohhwp1NZyDdqM8RRm/giphy.gif)
 ![best](https://community.canvaslms.com/servlet/JiveServlet/downloadImage/38-1251-71811/cat.gif)
 
 

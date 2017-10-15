@@ -5,6 +5,10 @@ Some key features:
 - Negative reward for agents collision
 - Negative reward for agents workinf in overlapping sensor range
 
+## results
+![best](https://community.canvaslms.com/servlet/JiveServlet/downloadImage/38-1251-71811/cat.gif)
+
+
 # REINFORCEjs
 
 **REINFORCEjs** is a Reinforcement Learning library that implements several common RL algorithms, all with web demos. In particular, the library currently includes:
